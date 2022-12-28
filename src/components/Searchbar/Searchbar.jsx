@@ -1,6 +1,7 @@
 import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Form, InputText, SubmitButton } from './Searcdar.styled';
+import { FcSearch } from 'react-icons/fc';
 
 class Searchbar extends Component {
   state = {
@@ -11,7 +12,7 @@ class Searchbar extends Component {
     event.preventDefault();
 
     if (this.state.searchText.trim() === '') {
-      alert('введіть текст пошуку');
+      return alert('введіть текст пошуку');
     }
 
     this.props.onSubmit(this.state.searchText);
@@ -26,8 +27,8 @@ class Searchbar extends Component {
   render() {
     return (
       <>
-        <header class="searchbar">
-          <Form class="form" onSubmit={this.search}>
+        <header>
+          <Form onSubmit={this.search}>
             <InputText
               value={this.state.searchText}
               class="input"
@@ -38,7 +39,9 @@ class Searchbar extends Component {
               onChange={this.handelChange}
             />
             <SubmitButton type="submit" class="button">
-              <span class="button-label">Search</span>
+              <span>
+                <FcSearch size={40} />
+              </span>
             </SubmitButton>
           </Form>
         </header>

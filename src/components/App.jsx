@@ -34,28 +34,30 @@ export class App extends Component {
       prevState.page !== this.state.page
     ) {
       this.setState({ status: 'pending' });
-      await fetch(
-        `https://pixabay.com/api/?key=${KEY}&q=${this.state.fetchInfo}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=${PER_PAGE}`
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
+      await setTimeout(() => {
+        fetch(
+          `https://pixabay.com/api/?key=${KEY}&q=${this.state.fetchInfo}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=${PER_PAGE}`
+        )
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
 
-          return Promise.reject(this.setState({ status: 'rejected' }));
-        })
-        .then(data => {
-          console.log('data:', data);
-          if (data.hits.length > 0) {
-            return this.setState(prevState => ({
-              info: [...prevState.info, ...data.hits],
-              totalHits: data.totalHits,
-              status: 'resolved',
-            }));
-          }
-          return this.setState({ status: 'rejected' });
-        })
-        .catch(() => this.setState({ status: 'rejected' }));
+            return Promise.reject(this.setState({ status: 'rejected' }));
+          })
+          .then(data => {
+            console.log('data:', data);
+            if (data.hits.length > 0) {
+              return this.setState(prevState => ({
+                info: [...prevState.info, ...data.hits],
+                totalHits: data.totalHits,
+                status: 'resolved',
+              }));
+            }
+            return this.setState({ status: 'rejected' });
+          })
+          .catch(() => this.setState({ status: 'rejected' }));
+      }, 0);
     }
   }
 
@@ -81,14 +83,14 @@ export class App extends Component {
     });
   };
 
-  onKeyDown = event => {
+  onKeyPress = event => {
     if (event.code === 'Escape') {
       this.modalClose();
     }
   };
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keydown', this.onKeyPress);
   }
 
   render() {
@@ -102,11 +104,14 @@ export class App extends Component {
         </>
       );
     }
+
     if (status === 'pending') {
       return (
         <>
           <Searchbar onSubmit={this.getSearchText}></Searchbar>
-          <Loader />
+          <div>
+            <Loader />
+          </div>
           <GlobalStyle />
         </>
       );
