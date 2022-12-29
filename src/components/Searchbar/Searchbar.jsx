@@ -31,14 +31,13 @@ class Searchbar extends Component {
           <Form onSubmit={this.search}>
             <InputText
               value={this.state.searchText}
-              class="input"
               type="text"
               autoComplete="off"
               autoFocus
               placeholder="Search images and photos"
               onChange={this.handelChange}
             />
-            <SubmitButton type="submit" class="button">
+            <SubmitButton type="submit">
               <span>
                 <FcSearch size={40} />
               </span>

@@ -5,13 +5,9 @@ import { ImgList } from './ImageGallery.styled';
 const ImageGallery = ({ info, onSelect }) => {
   return (
     <>
-      <ImgList class="gallery">
+      <ImgList>
         {info.map(data => (
-          <ImageGalleryItem
-            key={data.id}
-            info={data}
-            onSelect={onSelect}
-          ></ImageGalleryItem>
+          <ImageGalleryItem key={data.id} info={data} onSelect={onSelect} />
         ))}
       </ImgList>
     </>
